@@ -2,7 +2,7 @@ version: '3.4'
 volumes:
   vendor:
 services:
-  console:
+  logparser:
     build: .
     volumes:
         - .:/app

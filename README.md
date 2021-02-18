@@ -15,22 +15,27 @@
 $ docker-compose up -d --build
 ```
 
-## Build and Run
+### Enter bash shell
+```
+$ docker-compose exec logparser bash
+```
+
+### Build and Run
 ```sh
 $ docker build -t logparser . && docker run -it logparser bin/console
 ```
 
 ### List commands
 ```sh
-$ docker-compose exec console bin/console
+$ docker-compose exec logparser bin/console
 ```
 
 ### Run Log Parse
 ```sh
-$ docker-compose exec console bin/console app:parse
+$ docker-compose exec logparser bin/console app:parse
 ```
 
 ### Run Tests
 ```sh
-$ docker-compose exec
+$ docker-compose exec logparser bin/phpunit
 ```
