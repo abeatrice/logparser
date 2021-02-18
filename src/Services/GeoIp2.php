@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use GeoIp2\WebService\Client;
 use GeoIp2\Database\Reader;
 
 class GeoIp2
