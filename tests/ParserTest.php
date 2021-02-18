@@ -23,7 +23,7 @@ class ParserTest extends TestCase
     /** @test */
     public function it_outputs_data()
     {
-        //when creating parser with file that doesnt exist
+        //when creating parser with test file
         $parser = new Parser($this->testFilePath);
         $parser->buildCsv();
 
