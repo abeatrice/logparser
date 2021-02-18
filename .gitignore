@@ -3,3 +3,4 @@
 bin/*
 !bin/console
 composer.lock
+.env

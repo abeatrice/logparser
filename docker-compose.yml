@@ -2,7 +2,7 @@ version: '3.4'
 volumes:
   vendor:
 services:
-  console:
+  logparser:
     build: .
     volumes:
         - .:/app
@@ -10,3 +10,4 @@ services:
     restart: on-failure
     tty: true
     stdin_open: true
+  
