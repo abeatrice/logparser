@@ -29,14 +29,11 @@ class Parser
         }
         $lines = file($this->file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($lines as $line) {
-            try {
-                $entry = $this->logParser->parse($line);
-                list($country, $state) = $this->geoIp2->getGeo($entry->host);
-                var_dump($entry->host);
-                var_dump($country,$state);
-            } catch (\Throwable $th) {
-                var_dump($th->getMessage());
-            }
+            $entry = $this->logParser->parse($line);
+            list($country, $state) = $this->geoIp2->getGeo($entry->host);
+            //Translate useragent to device type (Mobile, Desktop, Tablet) and Browser (Safari, Chrome, etc)
+            var_dump($entry->HeaderUserAgent);
+            var_dump(get_browser($entry->HeaderUserAgent));
             die();
         }
     }
