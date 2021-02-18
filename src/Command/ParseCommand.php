@@ -7,7 +7,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Kassner\LogParser\LogParser;
 
 /**
  * Class ParseCommand
@@ -21,7 +20,7 @@ class ParseCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('parse log files for geo location data and export csv')
+        $this->setDescription('parse nginx access log files for geo location data and export csv')
             ->addArgument('file', InputArgument::REQUIRED, 'Input access log file path');
     }
 
@@ -35,7 +34,7 @@ class ParseCommand extends Command
     {
         $file = $input->getArgument('file');
         $parser = new Parser($file);
-        $parser->parse();
+        $parser->buildCsv();
         $output->writeln('done');
     }
 }

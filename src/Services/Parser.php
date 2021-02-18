@@ -25,17 +25,28 @@ class Parser
         $this->logParser->setFormat('%h %l %u %t "%r" %>s %O "%{Referer}i" \"%{User-Agent}i"');
     }
 
-    public function parse()
+    public function buildCsv()
     {
         if(!$this->fileSystem->exists($this->file)) {
             throw new \Exception($this->file . ' does not exist');
         }
         $lines = file($this->file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $csv = fopen(dirname(__FILE__, 3).'/output/access.csv', 'w');
+        fputcsv($csv, [
+            "host", "logname", "user", "time", "request", 
+            "status", "sentBytes", "HeaderReferer", "HeaderUserAgent", 
+            "country", "state", "browser", "device"
+        ]);
         foreach ($lines as $line) {
             $entry = $this->logParser->parse($line);
             list($country, $state) = $this->geoIp2->getGeo($entry->host);
             list($browser, $device) = $this->userAgentParser->parse($entry->HeaderUserAgent);
-            die();
+            fputcsv($csv, [
+                $entry->host, $entry->logname, $entry->user, $entry->time, $entry->request, 
+                $entry->status, $entry->sentBytes, $entry->HeaderReferer, $entry->HeaderUserAgent, 
+                $country, $state, $browser, $device
+            ]);
         }
+        fclose($csv);
     }
 }

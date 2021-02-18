@@ -11,10 +11,15 @@ class GeoIp2
     }
 
     public function getGeo($ip_address) {
-        $record = $this->reader->city($ip_address);
-        return [
-            $record->country->name,
-            $record->mostSpecificSubdivision->name
-        ];
+        $country = null;
+        $state = null;
+        try {
+            $record = $this->reader->city($ip_address);
+            $country = $record->country->name;
+            $state = $record->mostSpecificSubdivision->name;
+        } catch (\Throwable $th) {
+            //record not found
+        }
+        return [$country, $state];
     }
 }
