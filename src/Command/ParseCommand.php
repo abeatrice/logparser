@@ -35,7 +35,7 @@ class ParseCommand extends Command
     {
         $file = $input->getArgument('file');
         $parser = new Parser($file);
-        $parser->execute();
+        $parser->parse();
         $output->writeln('done');
     }
 }
