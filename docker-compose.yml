@@ -10,3 +10,4 @@ services:
     restart: on-failure
     tty: true
     stdin_open: true
+  

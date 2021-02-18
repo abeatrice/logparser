@@ -10,6 +10,10 @@
  - Docker
  - docker-compose
 
+## External Documents
+ - [maxmind instructions](https://blog.maxmind.com/2021/01/11/integrating-maxminds-free-and-paid-ip-geolocation-web-services-in-php/)
+ - [kassner-log-parser](https://github.com/kassner/log-parser)
+
 ## Install
 ```sh
 $ docker-compose up -d --build
