@@ -16,6 +16,8 @@
 
 ## Install
 ```sh
+# $ cp .env.example .env
+# update .env file MAXMIND_ACCOUNT_ID and MAXMIND_LICENSE_KEY obtained from https://www.maxmind.com/en/accounts/current/license-key
 $ docker-compose up -d --build
 ```
 
