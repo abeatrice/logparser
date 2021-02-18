@@ -65,7 +65,7 @@ $ docker-compose up -d --build
 # enter container
 $ docker-compose exec logparser bash
 # execute from host
-$ docker-compose exec logparser app parse ./access.log
+$ docker-compose exec logparser app parse ./logs/gobankingrates.com.access.log
 # stop running container
 $ docker-compose down
 ```
