@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Services\Parser;
+use Carbon\Carbon;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,9 +33,16 @@ class ParseCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $start = Carbon::now();
+        
         $file = $input->getArgument('file');
+        $output->writeln("[{$start->toDateTimeString()}] parsing file: {$file}");
+        
         $parser = new Parser($file);
         $parser->buildCsv();
-        $output->writeln('done');
+        
+        $end = Carbon::now();
+        $timeElapsed = $start->diffInSeconds($end);
+        $output->writeln("[{$end->toDateTimeString()}] {$file} parsed and csv built in {$timeElapsed} second(s).");
     }
 }

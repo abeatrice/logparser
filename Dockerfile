@@ -5,5 +5,6 @@ RUN apt-get update \
 WORKDIR /app
 ADD ./ .
 RUN php /usr/local/bin/composer install
+RUN ln -s /app/app /usr/local/bin/app
 
 CMD ["php", "-a"]
