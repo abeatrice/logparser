@@ -27,9 +27,10 @@ class ParserTest extends TestCase
         $parser = new Parser($this->testFilePath);
         $parser->buildCsv();
 
-        //expect file contents of test file to match example output file contents
+        //expect file contents of test file to matchs example output file contents
         $expected = file_get_contents($this->testOutputFilePath);
         $result = file_get_contents($this->outputFilePath);
+
         $this->assertEquals($expected, $result);
     }
 

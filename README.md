@@ -12,7 +12,17 @@ Read an nginx access log file and output a csv for all fields combined with extr
  - [log-parser](https://github.com/kassner/log-parser)
  - [UserAgentParser](https://github.com/ThaDafinser/UserAgentParser)
 
-## Install and Run
+## Run Dockerhub Image
+```sh
+# Navigate to gobankingrates.com.access.log file location on the host machine directory
+$ docker run --rm \
+    -v `pwd`:/logs \
+    -v `pwd`:/app/output \
+    abeatrice/logparser app parse /logs/gobankingrates.com.access.log
+# The current directory will be populated with the output file: access.csv
+```
+
+## Install and Run Locally
 ```sh
 # Get the source
 $ git clone https://github.com/abeatrice/logparser.git
@@ -25,7 +35,14 @@ $ docker build -t logparser .
 
 # Example run command
 # The output file: access.csv will be placed on the host machine's specified output file dir location
-$ docker run --rm -v `pwd`:/logs -v `pwd`:/app/output logparser app parse /logs/gobankingrates.com.access.log
+$ docker run --rm \
+    -v `pwd`:/logs \
+    -v `pwd`:/app/output \
+    logparser app parse /logs/gobankingrates.com.access.log
+
+# Example cli output
+# [2021-02-18 22:26:14] parsing file: /logs/gobankingrates.com.access.log
+# [2021-02-18 22:26:37] /logs/gobankingrates.com.access.log parsed and csv built in 22 second(s).
 
 # Command Breakdown:
 # docker run --rm : call docker cli to run the image
