@@ -1,0 +1,27 @@
+{
+    "name": "abeatrice/logparser",
+    "description": "Parse access log files for geo location information",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Andrew Beatrice"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App/"
+        }
+    },
+    "require": {
+        "symfony/console": "~4.0",
+        "php": ">=8.0"
+    },
+    "require-dev": {
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "symfony-bin-dir": "bin"
+    }
+}
