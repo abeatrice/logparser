@@ -55,5 +55,7 @@ $ docker-compose down
 
 ### Run Tests
 ```sh
+$ docker-compose up -d --build
 $ docker-compose exec logparser bin/phpunit
+$ docker-compose down
 ```

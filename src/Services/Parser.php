@@ -15,7 +15,12 @@ class Parser
     private $fileSystem;
     private $geoIp2;
 
-    public function __construct($file)
+    /**
+     * Create the parser
+     *
+     * @param String $file - nginx access log file
+     */
+    public function __construct(String $file)
     {
         $this->file = $file;
         $this->fileSystem = new Filesystem();
@@ -25,18 +30,28 @@ class Parser
         $this->logParser->setFormat('%h %l %u %t "%r" %>s %O "%{Referer}i" \"%{User-Agent}i"');
     }
 
-    public function buildCsv()
+    /**
+     * Build a csv file from the access log file and place it in the output dir
+     *
+     * @return void
+     */
+    public function buildCsv(): void
     {
+        //throw exception if input file does not exist
         if(!$this->fileSystem->exists($this->file)) {
             throw new \Exception($this->file . ' does not exist');
         }
-        $lines = file($this->file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        //create csv and put headers
         $csv = fopen(dirname(__FILE__, 3).'/output/access.csv', 'w');
         fputcsv($csv, [
             "host", "logname", "user", "time", "request", 
             "status", "sentBytes", "HeaderReferer", "HeaderUserAgent", 
             "country", "state", "browser", "device"
         ]);
+        
+        //build csv details from input file
+        $lines = file($this->file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         foreach ($lines as $line) {
             $entry = $this->logParser->parse($line);
             list($country, $state) = $this->geoIp2->getGeo($entry->host);
@@ -47,6 +62,8 @@ class Parser
                 $country, $state, $browser, $device
             ]);
         }
+
+        //close csv file
         fclose($csv);
     }
 }
