@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Kassner\LogParser\LogParser;
 
 /**
  * Class ParseCommand
@@ -34,7 +35,7 @@ class ParseCommand extends Command
     {
         $file = $input->getArgument('file');
         $parser = new Parser($file);
-        $output = $parser->execute();
+        $parser->execute();
         $output->writeln('done');
     }
 }
