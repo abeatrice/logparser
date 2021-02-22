@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/php:8-cli
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+      - run: ./bin/phpunit
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t abeatrice/logparser:latest -t abeatrice/logparser:$TAG .
+          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+          docker push abeatrice/logparser
+workflows:
+  version: 2
+  test-build:
+    jobs:
+      - test:
+          filters:
+            branches:
+              ignore: 
+                - develop
+                - /feature-.*/
+      - build:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
