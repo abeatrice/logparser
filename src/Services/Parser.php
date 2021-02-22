@@ -35,15 +35,22 @@ class Parser
      *
      * @return void
      */
-    public function buildCsv(): void
+    public function buildCsv(String $outputDir = null): void
     {
+        $outputDir = $outputDir ?? dirname(__FILE__, 3).'/output';
+
         //throw exception if input file does not exist
         if(!$this->fileSystem->exists($this->file)) {
             throw new \Exception($this->file . ' does not exist');
         }
 
+        //create output dir if doesnt exist
+        if(!$this->fileSystem->exists($outputDir)) {
+            $this->fileSystem->mkdir($outputDir);
+        }
+
         //create csv and put headers
-        $csv = fopen(dirname(__FILE__, 3).'/output/access.csv', 'w');
+        $csv = fopen($outputDir . '/access.csv', 'w');
         fputcsv($csv, [
             "host", "logname", "user", "time", "request", 
             "status", "sentBytes", "HeaderReferer", "HeaderUserAgent", 
