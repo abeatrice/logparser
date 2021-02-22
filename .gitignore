@@ -4,3 +4,4 @@ bin/*
 !bin/console
 composer.lock
 .env
+.phpunit.result.cache
